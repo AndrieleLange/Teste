@@ -3,16 +3,16 @@ package com.example.demo;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.ArrayList;
 
 
 @RestController
 public class Controller {
-    private List<Livros> livros;
+    ArrayList<Livros> livros = new ArrayList<>();
     public Controller(){
-        livros = new LinkedList<>;
-        livros.add(new Livro(1, "O Mulato", "Aluísio Azevedo"));
-        livros.add(new Livro(2, "O cortiço", "Aluísio Azevedo"));
-        livros.add(new Livro(3, "Casa de pensão", "Aluísio Azevedo"));
+        livros.add(new Livros(1, "O Mulato", "Aluísio Azevedo"));
+        livros.add(new Livros(2, "O cortiço", "Aluísio Azevedo"));
+        livros.add(new Livros(3, "Casa de pensão", "Aluísio Azevedo"));
 
 
     }
@@ -23,8 +23,9 @@ public class Controller {
     }
     @GetMapping("/livros")
     @CrossOrigin(origins = "*")
-    public String getLivros() {
-        return "Lista de livros";
+    public ArrayList<Livros> getLivros() {
+        return livros;
+        
     }
     
     
