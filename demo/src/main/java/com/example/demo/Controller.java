@@ -1,32 +1,51 @@
 package com.example.demo;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.ArrayList;
-
 
 @RestController
 public class Controller {
-    ArrayList<Livros> livros = new ArrayList<>();
-    public Controller(){
-        livros.add(new Livros(1, "O Mulato", "Aluísio Azevedo"));
-        livros.add(new Livros(2, "O cortiço", "Aluísio Azevedo"));
-        livros.add(new Livros(3, "Casa de pensão", "Aluísio Azevedo"));
+    private List<Livros> livros;
 
+    public Controller() {
+        livros = new LinkedList<>();
+        livros.add(new Livros(100, "Aprendendo Spring-Boot", "Huguinho Pato"));
+        livros.add(new Livros(120, "Aprendendo Java", "Zezinho Pato"));
+        livros.add(new Livros(140, "Aprendendo Outra coisa", "Luizinho Pato"));
+        livros.add(new Livros(140, "Aprendendo Uma coisa nova", "Huguinho Pato"));
+        livros.add(new Livros(140, "Aprendendo Outra coisa nova", "Huguinho Pato"));
+    }
 
-    }
-    @GetMapping("/")
-    @CrossOrigin(origins = "*") // quem vai acessar
-    public String getSaudacao() {
-        return "Bem-vindo a biblioteca central!";
-    }
-    @GetMapping("/livros")
+    @GetMapping("")
     @CrossOrigin(origins = "*")
-    public ArrayList<Livros> getLivros() {
-        return livros;
-        
+    public String mensagemDeBemVindo() {
+        return "Bem vindo a biblioteca central!";
     }
-    
-    
+
+    @GetMapping("livros")
+    @CrossOrigin(origins = "*")
+    public List<Livros> getListaLivros() {
+        return livros;
+    }
+
+    @GetMapping("autores")
+    @CrossOrigin(origins = "*")
+    public List<String> getListaAutores() {
+        return livros.stream()
+                .map(l -> l.getAutor())
+                .distinct()
+                .toList();
+    }
+
+    @GetMapping("titulos")
+    @CrossOrigin(origins = "*")
+    public List<String> getListaTitulos() {
+        return livros.stream()
+                .map(l -> l.getTitulo())
+                .toList();
+    }
 }
