@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -13,11 +15,11 @@ public class Controller {
 
     public Controller() {
         livros = new LinkedList<>();
-        livros.add(new Livros(100, "Aprendendo Spring-Boot", "Huguinho Pato"));
-        livros.add(new Livros(120, "Aprendendo Java", "Zezinho Pato"));
-        livros.add(new Livros(140, "Aprendendo Outra coisa", "Luizinho Pato"));
-        livros.add(new Livros(140, "Aprendendo Uma coisa nova", "Huguinho Pato"));
-        livros.add(new Livros(140, "Aprendendo Outra coisa nova", "Huguinho Pato"));
+        livros.add(new Livros(100, "Aprendendo Spring-Boot", "Huguinho Pato", 2020));
+        livros.add(new Livros(120, "Aprendendo Java", "Zezinho Pato", 2015));
+        livros.add(new Livros(140, "Aprendendo Outra coisa", "Luizinho Pato", 2023));
+        livros.add(new Livros(140, "Aprendendo Uma coisa nova", "Huguinho Pato", 2023));
+        livros.add(new Livros(140, "Aprendendo Outra coisa nova", "Huguinho Pato", 2023));
     }
 
     @GetMapping("")
@@ -48,4 +50,13 @@ public class Controller {
                 .map(l -> l.getTitulo())
                 .toList();
     }
+
+    @GetMapping("/livrosPorAno/{valor}")
+    @CrossOrigin(origins = "*")
+    public List<Livros> getLivrosPorAno(@PathVariable int valor) {
+        return livros.stream()
+                .filter(l -> l.getAno()==valor)
+                .toList();
+    }
+
 }
